@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "RefHub Claude Code plugins and skills",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   "plugins": [
     {
@@ -15,7 +15,7 @@
         "source": "github",
         "repo": "refhub-io/refhub-skill"
       },
-      "version": "1.0.1"
+      "version": "1.0.2"
     }
   ]
 }
