@@ -1,90 +1,17 @@
-# refhub-claude
+# refhub-claude (archived)
 
-> // claude_code_plugin_registry for [refhub.io](https://refhub.io)
+> // deprecated — superseded by self-hosted marketplaces
 
-Claude Code plugin marketplace for first-party RefHub agent integrations.
+This repo is archived. It used to be a pure index — no plugin logic of its own — listing `refhub-skill` as a Claude Code marketplace entry.
 
-Codex integrations live separately in [`refhub-codex`](https://github.com/refhub-io/refhub-codex) so each agent runtime keeps native packaging instead of sharing the Claude plugin manifest.
+Each RefHub skill/plugin repo now self-hosts its own Claude Code and Codex marketplace manifests instead of relying on a shared index repo. Install directly from the repo you want:
 
----
-
-## // install
-
-```sh
-claude plugin marketplace add \
-  https://github.com/refhub-io/refhub-claude
-```
-
-then install any plugin from the registry:
+- [`refhub-skill`](https://github.com/refhub-io/refhub-skill) — agent skill for operating RefHub through its public API v2 (vaults, items, tags, relations, import/export, audit, Semantic Scholar, PDF upload)
+- [`refhub-paper-drafter`](https://github.com/refhub-io/refhub-paper-drafter) — HCI/visualization paper drafting skill, built on top of `refhub-skill`
 
 ```sh
-claude plugin install refhub-skill@refhub-claude
+claude plugin marketplace add https://github.com/refhub-io/refhub-skill
+claude plugin install refhub-skill@refhub-skill
 ```
 
----
-
-## // plugins
-
-| plugin | description | version |
-|--------|-------------|---------|
-| [`refhub-skill`](https://github.com/refhub-io/refhub-skill) | agent skill for API-key RefHub vault/item/search/import/export/audit, Semantic Scholar discovery/enrichment, and item-scoped PDF uploads including large-PDF resumable Drive upload | `1.0.2` |
-
----
-
-## // structure
-
-```
-.claude-plugin/
-  marketplace.json   ← plugin registry manifest
-```
-
-the manifest lists plugin sources. claude code reads this to discover and install plugins. adding a plugin here makes it available to any user who has registered this marketplace.
-
-## // ssh gotcha
-
-`claude plugin marketplace add refhub-io/refhub-claude` uses GitHub shorthand, and Claude resolves that by cloning over SSH:
-
-```text
-git@github.com:refhub-io/refhub-claude.git
-```
-
-That fails on machines without a GitHub SSH key. Use an explicit HTTPS repo URL:
-
-```sh
-claude plugin marketplace add https://github.com/refhub-io/refhub-claude
-```
-
-The declared marketplace name is still `refhub-claude`, so installation is:
-
-```sh
-claude plugin install refhub-skill@refhub-claude
-```
-
----
-
-## // adding a plugin
-
-edit `.claude-plugin/marketplace.json` and add an entry:
-
-```json
-{
-  "name": "your-plugin-name",
-  "description": "...",
-  "source": {
-    "source": "url",
-    "url": "https://github.com/refhub-io/your-plugin-repo.git",
-    "sha": "commit-sha"
-  },
-  "version": "x.x.x"
-}
-```
-
-the plugin repo must have `.claude-plugin/plugin.json` and a `skills/` directory at its root.
-
----
-
-## // related
-
-- [refhub-skill](https://github.com/refhub-io/refhub-skill) — agent skill for RefHub API-key workflows: vault and item management, import, search, export, vault audit, Semantic Scholar discovery/enrichment through `/semantic-scholar/*`, and item-scoped Google Drive PDF uploads after Drive is connected in the RefHub web UI. Small PDFs use the raw item route; larger vault-item PDFs use API-key `/pdf/session`, direct Drive `PUT` to the returned `upload_url`, then `/pdf/complete`. Account setup/admin flows such as API-key lifecycle, Google Drive connect/disconnect, and global audit remain browser/session-JWT workflows.
-- [refhub-codex](https://github.com/refhub-io/refhub-codex) — Codex-native RefHub skill packaging backed by the same `@refhub/cli` execution layer.
-- [refhub.io](https://refhub.io) — the platform
+No further changes will be made to this repository.
